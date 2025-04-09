@@ -1,4 +1,6 @@
-namespace winpg
+using WinPG.Forms;
+
+namespace WinPG
 {
     internal static class Program
     {

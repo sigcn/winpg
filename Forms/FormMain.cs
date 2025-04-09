@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace winpg
+namespace WinPG.Forms
 {
     public partial class FormMain : Form
     {

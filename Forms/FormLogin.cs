@@ -1,10 +1,9 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace winpg
+namespace WinPG.Forms
 {
     public partial class FormLogin : Form
     {

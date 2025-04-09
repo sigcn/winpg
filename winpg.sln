@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winpg", "winpg.csproj", "{112EB7EB-43D9-4C2B-ADC9-7B43C41C86B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPG", "WinPG.csproj", "{112EB7EB-43D9-4C2B-ADC9-7B43C41C86B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

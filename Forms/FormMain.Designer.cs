@@ -1,4 +1,4 @@
-﻿namespace winpg
+﻿namespace WinPG.Forms
 {
     partial class FormMain
     {
