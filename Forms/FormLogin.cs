@@ -12,9 +12,10 @@ namespace WinPG.Forms
         public FormLogin()
         {
             InitializeComponent();
+            this.Shown += OnShown;
         }
 
-        private async void renderOIDCSignin()
+        private async void RenderOIDCSignin()
         {
             try
             {
@@ -29,12 +30,10 @@ namespace WinPG.Forms
                     return;
                 }
 
-                if(providers.Data != null)
-                {
-                    LabelSigninOpt.Visible = true;
-                }
+                LabelSigninOpt.Visible = providers.Data != null;
 
                 var top = 0;
+                PanelOIDC.Invoke(() => PanelOIDC.Controls.Clear());
                 foreach (string provider in providers.Data ?? [])
                 {
                     Button button = new()
@@ -80,7 +79,7 @@ namespace WinPG.Forms
                                 this.Hide();
                                 new FormMain(this).Show();
                             });
-                            
+
                         });
 
                         // open brower
@@ -110,7 +109,7 @@ namespace WinPG.Forms
         }
 
 
-        private void Form1_Load(object sender, EventArgs e)
+        public void OnShown(object? sender, EventArgs e)
         {
             if (File.Exists("psns.json"))
             {
@@ -125,7 +124,7 @@ namespace WinPG.Forms
                     });
                 }
             }
-            renderOIDCSignin();
+            RenderOIDCSignin();
         }
 
         private void SignIn_Click(object sender, EventArgs e)
@@ -152,7 +151,13 @@ namespace WinPG.Forms
             this.Hide();
             new FormMain(this).Show();
         }
-       
+
+        private void PictureBoxSettings_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormSettings formSettings = new(this);
+            formSettings.Show();
+        }
     }
 
     public class Providers

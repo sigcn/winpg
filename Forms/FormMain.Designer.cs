@@ -1,4 +1,6 @@
-﻿namespace WinPG.Forms
+﻿using WinPG.Properties;
+
+namespace WinPG.Forms
 {
     partial class FormMain
     {
@@ -61,8 +63,8 @@
             // 
             // TabControlMain
             // 
-            TabControlMain.Controls.Add(tabpeers);
             TabControlMain.Controls.Add(tablogs);
+            TabControlMain.Controls.Add(tabpeers);
             TabControlMain.Controls.Add(tabsettings);
             TabControlMain.Location = new Point(12, 52);
             TabControlMain.Name = "TabControlMain";
@@ -179,7 +181,7 @@
             LabelServerValue.Name = "LabelServerValue";
             LabelServerValue.Size = new Size(122, 17);
             LabelServerValue.TabIndex = 15;
-            LabelServerValue.Text = "wss://openpg.in/pg";
+            LabelServerValue.Text = Settings.Default.Server;
             // 
             // label3
             // 

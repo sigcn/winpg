@@ -33,11 +33,11 @@
             signin = new Button();
             logotext = new Label();
             pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
+            PictureBoxSettings = new PictureBox();
             PanelOIDC = new Panel();
             LabelSigninOpt = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PictureBoxSettings).BeginInit();
             SuspendLayout();
             // 
             // TextJSONSecret
@@ -80,15 +80,16 @@
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             // 
-            // pictureBox2
+            // PictureBoxSettings
             // 
-            pictureBox2.Image = Properties.Resources.settings_3;
-            pictureBox2.Location = new Point(290, 425);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(24, 27);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.TabIndex = 5;
-            pictureBox2.TabStop = false;
+            PictureBoxSettings.Image = Properties.Resources.settings_3;
+            PictureBoxSettings.Location = new Point(290, 425);
+            PictureBoxSettings.Name = "PictureBoxSettings";
+            PictureBoxSettings.Size = new Size(24, 27);
+            PictureBoxSettings.SizeMode = PictureBoxSizeMode.Zoom;
+            PictureBoxSettings.TabIndex = 5;
+            PictureBoxSettings.TabStop = false;
+            PictureBoxSettings.Click += PictureBoxSettings_Click;
             // 
             // PanelOIDC
             // 
@@ -115,7 +116,7 @@
             ClientSize = new Size(322, 460);
             Controls.Add(LabelSigninOpt);
             Controls.Add(PanelOIDC);
-            Controls.Add(pictureBox2);
+            Controls.Add(PictureBoxSettings);
             Controls.Add(pictureBox1);
             Controls.Add(logotext);
             Controls.Add(signin);
@@ -129,9 +130,8 @@
             RightToLeftLayout = true;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "WinPG";
-            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PictureBoxSettings).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -142,7 +142,7 @@
         private Button signin;
         private Label logotext;
         private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
+        private PictureBox PictureBoxSettings;
         private Panel PanelOIDC;
         private Label LabelSigninOpt;
     }

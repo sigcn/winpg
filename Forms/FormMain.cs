@@ -185,6 +185,7 @@ namespace WinPG.Forms
                 MessageBox.Show("Error: " + ex.Message);
                 return;
             }
+            Properties.Settings.Default.Save();
             MessageBox.Show("OK");
         }
 
@@ -197,6 +198,7 @@ namespace WinPG.Forms
             }
             if (TabControlMain.SelectedIndex == 2)
             {
+                LabelServerValue.Text = Properties.Settings.Default.Server;
                 TextIPv4.Text = Properties.Settings.Default.IPv4;
                 TextIPv6.Text = Properties.Settings.Default.IPv6;
                 TextMTU.Text = Properties.Settings.Default.MTU + "";
