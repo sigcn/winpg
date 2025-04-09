@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="winpg.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Server" Type="System.String" Scope="User">
+      <Value Profile="(Default)">wss://openpg.in/pg</Value>
+    </Setting>
+    <Setting Name="IPv4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">100.99.0.25/24</Value>
+    </Setting>
+    <Setting Name="IPv6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fd99::25/64</Value>
+    </Setting>
+    <Setting Name="MTU" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1371</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
