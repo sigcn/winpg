@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             TabControlMain = new TabControl();
             tabpeers = new TabPage();
@@ -38,21 +39,23 @@
             tabsettings = new TabPage();
             label7 = new Label();
             ButtonSave = new Button();
-            label6 = new Label();
+            LabelMTU = new Label();
             TextMTU = new TextBox();
-            label5 = new Label();
             LabelServer = new Label();
+            LabelServerValue = new Label();
             label3 = new Label();
             TextIPv6 = new TextBox();
             label2 = new Label();
             TextIPv4 = new TextBox();
             ButtonSignout = new Button();
+            peerBindingSource = new BindingSource(components);
             pictureBox1 = new PictureBox();
             label1 = new Label();
             LabelNetwork = new Label();
             TabControlMain.SuspendLayout();
             tablogs.SuspendLayout();
             tabsettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)peerBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -64,16 +67,17 @@
             TabControlMain.Location = new Point(12, 52);
             TabControlMain.Name = "TabControlMain";
             TabControlMain.SelectedIndex = 0;
-            TabControlMain.Size = new Size(328, 490);
+            TabControlMain.Size = new Size(331, 490);
             TabControlMain.TabIndex = 6;
             TabControlMain.SelectedIndexChanged += TabControlMain_SelectedIndexChanged;
             // 
             // tabpeers
             // 
+            tabpeers.AutoScroll = true;
             tabpeers.Location = new Point(4, 26);
             tabpeers.Name = "tabpeers";
             tabpeers.Padding = new Padding(3);
-            tabpeers.Size = new Size(320, 460);
+            tabpeers.Size = new Size(323, 460);
             tabpeers.TabIndex = 0;
             tabpeers.Text = "Peers";
             tabpeers.UseVisualStyleBackColor = true;
@@ -84,7 +88,7 @@
             tablogs.Location = new Point(4, 26);
             tablogs.Name = "tablogs";
             tablogs.Padding = new Padding(3);
-            tablogs.Size = new Size(320, 460);
+            tablogs.Size = new Size(323, 460);
             tablogs.TabIndex = 1;
             tablogs.Text = "Logs";
             tablogs.UseVisualStyleBackColor = true;
@@ -92,7 +96,7 @@
             // TextLogs
             // 
             TextLogs.BackColor = SystemColors.ControlLightLight;
-            TextLogs.Font = new Font("Microsoft YaHei UI", 7F);
+            TextLogs.Font = new Font("Microsoft YaHei UI", 8F);
             TextLogs.Location = new Point(-3, 0);
             TextLogs.Multiline = true;
             TextLogs.Name = "TextLogs";
@@ -105,10 +109,10 @@
             // 
             tabsettings.Controls.Add(label7);
             tabsettings.Controls.Add(ButtonSave);
-            tabsettings.Controls.Add(label6);
+            tabsettings.Controls.Add(LabelMTU);
             tabsettings.Controls.Add(TextMTU);
-            tabsettings.Controls.Add(label5);
             tabsettings.Controls.Add(LabelServer);
+            tabsettings.Controls.Add(LabelServerValue);
             tabsettings.Controls.Add(label3);
             tabsettings.Controls.Add(TextIPv6);
             tabsettings.Controls.Add(label2);
@@ -116,7 +120,7 @@
             tabsettings.Controls.Add(ButtonSignout);
             tabsettings.Location = new Point(4, 26);
             tabsettings.Name = "tabsettings";
-            tabsettings.Size = new Size(320, 460);
+            tabsettings.Size = new Size(323, 460);
             tabsettings.TabIndex = 2;
             tabsettings.Text = "Settings";
             tabsettings.UseVisualStyleBackColor = true;
@@ -142,14 +146,14 @@
             ButtonSave.UseVisualStyleBackColor = true;
             ButtonSave.Click += ButtonSave_Click;
             // 
-            // label6
+            // LabelMTU
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(47, 190);
-            label6.Name = "label6";
-            label6.Size = new Size(36, 17);
-            label6.TabIndex = 18;
-            label6.Text = "MTU";
+            LabelMTU.AutoSize = true;
+            LabelMTU.Location = new Point(47, 190);
+            LabelMTU.Name = "LabelMTU";
+            LabelMTU.Size = new Size(36, 17);
+            LabelMTU.TabIndex = 18;
+            LabelMTU.Text = "MTU";
             // 
             // TextMTU
             // 
@@ -159,23 +163,23 @@
             TextMTU.TabIndex = 17;
             TextMTU.Text = "1371";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(47, 105);
-            label5.Name = "label5";
-            label5.Size = new Size(45, 17);
-            label5.TabIndex = 16;
-            label5.Text = "Server";
-            // 
             // LabelServer
             // 
             LabelServer.AutoSize = true;
-            LabelServer.Location = new Point(96, 105);
+            LabelServer.Location = new Point(47, 105);
             LabelServer.Name = "LabelServer";
-            LabelServer.Size = new Size(122, 17);
-            LabelServer.TabIndex = 15;
-            LabelServer.Text = "wss://openpg.in/pg";
+            LabelServer.Size = new Size(45, 17);
+            LabelServer.TabIndex = 16;
+            LabelServer.Text = "Server";
+            // 
+            // LabelServerValue
+            // 
+            LabelServerValue.AutoSize = true;
+            LabelServerValue.Location = new Point(96, 105);
+            LabelServerValue.Name = "LabelServerValue";
+            LabelServerValue.Size = new Size(122, 17);
+            LabelServerValue.TabIndex = 15;
+            LabelServerValue.Text = "wss://openpg.in/pg";
             // 
             // label3
             // 
@@ -222,11 +226,15 @@
             ButtonSignout.UseVisualStyleBackColor = true;
             ButtonSignout.Click += ButtonSignout_Click;
             // 
+            // peerBindingSource
+            // 
+            peerBindingSource.DataSource = typeof(Models.Peer);
+            // 
             // pictureBox1
             // 
             pictureBox1.Cursor = Cursors.Hand;
             pictureBox1.Image = Properties.Resources.start;
-            pictureBox1.Location = new Point(316, 8);
+            pictureBox1.Location = new Point(319, 8);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(24, 24);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -275,6 +283,7 @@
             tablogs.PerformLayout();
             tabsettings.ResumeLayout(false);
             tabsettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)peerBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -282,7 +291,6 @@
 
         #endregion
         private TabControl TabControlMain;
-        private TabPage tabpeers;
         private TabPage tablogs;
         private PictureBox pictureBox1;
         private Label label1;
@@ -294,11 +302,13 @@
         private TextBox TextIPv4;
         private Label label3;
         private TextBox TextIPv6;
-        private Label label5;
         private Label LabelServer;
-        private Label label6;
+        private Label LabelServerValue;
+        private Label LabelMTU;
         private TextBox TextMTU;
         private Button ButtonSave;
         private Label label7;
+        private BindingSource peerBindingSource;
+        private TabPage tabpeers;
     }
 }
