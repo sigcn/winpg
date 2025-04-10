@@ -93,7 +93,6 @@ namespace WinPG.Forms
             {
                 process.StartInfo.Arguments += $" -6 \"{Properties.Settings.Default.IPv6}\"";
             }
-            TextLogs.Invoke((MethodInvoker)(() => TextLogs.AppendText(process.StartInfo.Arguments + Environment.NewLine)));
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
