@@ -63,6 +63,8 @@ namespace WinPG.Forms
             {
                 return;
             }
+            this.TopMost = true;
+            this.TopMost = false;
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
