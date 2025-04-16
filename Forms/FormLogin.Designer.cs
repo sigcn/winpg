@@ -43,7 +43,7 @@
             // TextJSONSecret
             // 
             TextJSONSecret.ForeColor = SystemColors.WindowText;
-            TextJSONSecret.Location = new Point(42, 114);
+            TextJSONSecret.Location = new Point(26, 114);
             TextJSONSecret.Multiline = true;
             TextJSONSecret.Name = "TextJSONSecret";
             TextJSONSecret.PlaceholderText = "JSON Secret ";
@@ -52,7 +52,7 @@
             // 
             // signin
             // 
-            signin.Location = new Point(42, 164);
+            signin.Location = new Point(26, 164);
             signin.Name = "signin";
             signin.Size = new Size(237, 26);
             signin.TabIndex = 1;
@@ -64,7 +64,7 @@
             // 
             logotext.AutoSize = true;
             logotext.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold);
-            logotext.Location = new Point(122, 46);
+            logotext.Location = new Point(106, 46);
             logotext.Name = "logotext";
             logotext.Size = new Size(113, 26);
             logotext.TabIndex = 3;
@@ -73,7 +73,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.logo;
-            pictureBox1.Location = new Point(86, 44);
+            pictureBox1.Location = new Point(70, 44);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(30, 30);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -83,9 +83,9 @@
             // PictureBoxSettings
             // 
             PictureBoxSettings.Image = Properties.Resources.settings_3;
-            PictureBoxSettings.Location = new Point(290, 425);
+            PictureBoxSettings.Location = new Point(259, 8);
             PictureBoxSettings.Name = "PictureBoxSettings";
-            PictureBoxSettings.Size = new Size(24, 27);
+            PictureBoxSettings.Size = new Size(22, 22);
             PictureBoxSettings.SizeMode = PictureBoxSizeMode.Zoom;
             PictureBoxSettings.TabIndex = 5;
             PictureBoxSettings.TabStop = false;
@@ -93,7 +93,7 @@
             // 
             // PanelOIDC
             // 
-            PanelOIDC.Location = new Point(42, 234);
+            PanelOIDC.Location = new Point(26, 234);
             PanelOIDC.Name = "PanelOIDC";
             PanelOIDC.Size = new Size(237, 200);
             PanelOIDC.TabIndex = 6;
@@ -102,7 +102,7 @@
             // 
             LabelSigninOpt.AutoSize = true;
             LabelSigninOpt.Font = new Font("Microsoft YaHei UI", 7F, FontStyle.Bold);
-            LabelSigninOpt.Location = new Point(152, 204);
+            LabelSigninOpt.Location = new Point(136, 204);
             LabelSigninOpt.Name = "LabelSigninOpt";
             LabelSigninOpt.Size = new Size(22, 15);
             LabelSigninOpt.TabIndex = 7;
@@ -113,7 +113,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(322, 460);
+            ClientSize = new Size(289, 434);
             Controls.Add(LabelSigninOpt);
             Controls.Add(PanelOIDC);
             Controls.Add(PictureBoxSettings);
