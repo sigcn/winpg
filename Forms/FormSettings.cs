@@ -11,16 +11,19 @@ using WinPG.Properties;
 
 namespace WinPG.Forms
 {
-    public partial class FormSettings : Form
+    public partial class FormSettings : NoneBorderForm
     {
 
         private FormLogin formLogin;
         public FormSettings(FormLogin formLogin)
         {
             InitializeComponent();
+            this.MouseDown += this.MoveForm;
+            this.ApplyFormEffects();
             this.formLogin = formLogin;
             this.FormClosing += FormSettings_FormClosing;
         }
+
 
         private void FormSettings_FormClosing(object? sender, FormClosingEventArgs e)
         {

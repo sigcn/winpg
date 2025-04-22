@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,13 +14,14 @@ using WinPG.Models;
 
 namespace WinPG.Forms
 {
-    public partial class FormMain : Form
+    public partial class FormMain : NoneBorderForm
     {
         private PGVPN pgvpn = new();
         private Process? process;
         private readonly NotifyIcon trayIcon;
         private readonly ContextMenuStrip trayMenu;
         private readonly FormLogin formLogin;
+
         public FormMain(FormLogin formLogin)
         {
             this.formLogin = formLogin;
@@ -189,6 +191,8 @@ namespace WinPG.Forms
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            this.MouseDown += this.MoveForm;
+            this.ApplyFormEffects();
             this.StartVPN();
             Task.Delay(1000).ContinueWith(t =>
             {

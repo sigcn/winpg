@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace WinPG.Forms
 {
-    public partial class FormLogin : Form
+    public partial class FormLogin : NoneBorderForm
     {
         private static readonly HttpClient client = new();
 
@@ -13,6 +13,8 @@ namespace WinPG.Forms
         {
             InitializeComponent();
             this.Shown += OnShown;
+            this.MouseDown += this.MoveForm;
+            this.ApplyFormEffects();
         }
 
         private async void RenderOIDCSignin()

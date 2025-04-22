@@ -51,9 +51,12 @@ namespace WinPG.Forms
             ButtonSignout = new Button();
             LabelNetwork = new Label();
             cyberSwitchStart = new ReaLTaiizor.Controls.CyberSwitch();
+            controlBox1 = new ReaLTaiizor.Controls.ControlBox();
+            hopePictureBox1 = new ReaLTaiizor.Controls.HopePictureBox();
             TabControlMain.SuspendLayout();
             tablogs.SuspendLayout();
             tabsettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)hopePictureBox1).BeginInit();
             SuspendLayout();
             // 
             // TabControlMain
@@ -61,7 +64,7 @@ namespace WinPG.Forms
             TabControlMain.Controls.Add(tablogs);
             TabControlMain.Controls.Add(tabpeers);
             TabControlMain.Controls.Add(tabsettings);
-            TabControlMain.Location = new Point(12, 52);
+            TabControlMain.Location = new Point(12, 67);
             TabControlMain.Name = "TabControlMain";
             TabControlMain.SelectedIndex = 0;
             TabControlMain.Size = new Size(331, 490);
@@ -137,9 +140,9 @@ namespace WinPG.Forms
             // ButtonSave
             // 
             ButtonSave.Font = new Font("Microsoft YaHei UI", 9F);
-            ButtonSave.Location = new Point(47, 230);
+            ButtonSave.Location = new Point(37, 206);
             ButtonSave.Name = "ButtonSave";
-            ButtonSave.Size = new Size(233, 26);
+            ButtonSave.Size = new Size(247, 26);
             ButtonSave.TabIndex = 19;
             ButtonSave.Text = "Save";
             ButtonSave.UseVisualStyleBackColor = true;
@@ -148,7 +151,7 @@ namespace WinPG.Forms
             // LabelMTU
             // 
             LabelMTU.AutoSize = true;
-            LabelMTU.Location = new Point(47, 190);
+            LabelMTU.Location = new Point(37, 166);
             LabelMTU.Name = "LabelMTU";
             LabelMTU.Size = new Size(36, 17);
             LabelMTU.TabIndex = 18;
@@ -156,16 +159,16 @@ namespace WinPG.Forms
             // 
             // TextMTU
             // 
-            TextMTU.Location = new Point(96, 187);
+            TextMTU.Location = new Point(86, 163);
             TextMTU.Name = "TextMTU";
-            TextMTU.Size = new Size(184, 23);
+            TextMTU.Size = new Size(198, 23);
             TextMTU.TabIndex = 17;
             TextMTU.Text = "1371";
             // 
             // LabelServer
             // 
             LabelServer.AutoSize = true;
-            LabelServer.Location = new Point(47, 105);
+            LabelServer.Location = new Point(37, 81);
             LabelServer.Name = "LabelServer";
             LabelServer.Size = new Size(45, 17);
             LabelServer.TabIndex = 16;
@@ -174,7 +177,7 @@ namespace WinPG.Forms
             // LabelServerValue
             // 
             LabelServerValue.AutoSize = true;
-            LabelServerValue.Location = new Point(96, 105);
+            LabelServerValue.Location = new Point(86, 81);
             LabelServerValue.Name = "LabelServerValue";
             LabelServerValue.Size = new Size(122, 17);
             LabelServerValue.TabIndex = 15;
@@ -183,7 +186,7 @@ namespace WinPG.Forms
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(47, 161);
+            label3.Location = new Point(37, 137);
             label3.Name = "label3";
             label3.Size = new Size(32, 17);
             label3.TabIndex = 14;
@@ -191,16 +194,16 @@ namespace WinPG.Forms
             // 
             // TextIPv6
             // 
-            TextIPv6.Location = new Point(96, 158);
+            TextIPv6.Location = new Point(86, 134);
             TextIPv6.Name = "TextIPv6";
-            TextIPv6.Size = new Size(184, 23);
+            TextIPv6.Size = new Size(198, 23);
             TextIPv6.TabIndex = 13;
             TextIPv6.Text = "fd99::25/64";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(47, 132);
+            label2.Location = new Point(37, 108);
             label2.Name = "label2";
             label2.Size = new Size(32, 17);
             label2.TabIndex = 12;
@@ -208,18 +211,18 @@ namespace WinPG.Forms
             // 
             // TextIPv4
             // 
-            TextIPv4.Location = new Point(96, 129);
+            TextIPv4.Location = new Point(86, 105);
             TextIPv4.Name = "TextIPv4";
-            TextIPv4.Size = new Size(184, 23);
+            TextIPv4.Size = new Size(198, 23);
             TextIPv4.TabIndex = 11;
             TextIPv4.Text = "100.99.0.25/24";
             // 
             // ButtonSignout
             // 
             ButtonSignout.Font = new Font("Microsoft YaHei UI", 9F);
-            ButtonSignout.Location = new Point(47, 388);
+            ButtonSignout.Location = new Point(37, 388);
             ButtonSignout.Name = "ButtonSignout";
-            ButtonSignout.Size = new Size(233, 26);
+            ButtonSignout.Size = new Size(247, 26);
             ButtonSignout.TabIndex = 10;
             ButtonSignout.Text = "Sign out";
             ButtonSignout.UseVisualStyleBackColor = true;
@@ -229,7 +232,7 @@ namespace WinPG.Forms
             // 
             LabelNetwork.AutoSize = true;
             LabelNetwork.Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold);
-            LabelNetwork.Location = new Point(16, 12);
+            LabelNetwork.Location = new Point(11, 38);
             LabelNetwork.Name = "LabelNetwork";
             LabelNetwork.Size = new Size(60, 17);
             LabelNetwork.TabIndex = 9;
@@ -260,7 +263,7 @@ namespace WinPG.Forms
             cyberSwitchStart.LinearGradient_Background = false;
             cyberSwitchStart.LinearGradient_Value = false;
             cyberSwitchStart.LinearGradientPen = false;
-            cyberSwitchStart.Location = new Point(305, 9);
+            cyberSwitchStart.Location = new Point(305, 35);
             cyberSwitchStart.Name = "cyberSwitchStart";
             cyberSwitchStart.PenWidth = 10;
             cyberSwitchStart.RGB = false;
@@ -274,15 +277,49 @@ namespace WinPG.Forms
             cyberSwitchStart.Timer_RGB = 300;
             cyberSwitchStart.CheckedChanged += CyberSwitchStart_CheckedChanged;
             // 
+            // controlBox1
+            // 
+            controlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            controlBox1.BackColor = SystemColors.Control;
+            controlBox1.CloseHoverColor = Color.FromArgb(230, 17, 35);
+            controlBox1.DefaultLocation = false;
+            controlBox1.EnableHoverHighlight = true;
+            controlBox1.EnableMaximizeButton = false;
+            controlBox1.EnableMinimizeButton = true;
+            controlBox1.ForeColor = Color.FromArgb(155, 155, 155);
+            controlBox1.Location = new Point(258, 4);
+            controlBox1.MaximizeHoverColor = Color.FromArgb(74, 74, 74);
+            controlBox1.MinimizeHoverColor = Color.FromArgb(63, 63, 65);
+            controlBox1.Name = "controlBox1";
+            controlBox1.Size = new Size(90, 25);
+            controlBox1.TabIndex = 11;
+            controlBox1.Text = "controlBox1";
+            // 
+            // hopePictureBox1
+            // 
+            hopePictureBox1.BackColor = Color.FromArgb(192, 196, 204);
+            hopePictureBox1.Image = Resources.logo;
+            hopePictureBox1.Location = new Point(10, 7);
+            hopePictureBox1.Name = "hopePictureBox1";
+            hopePictureBox1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            hopePictureBox1.Size = new Size(18, 18);
+            hopePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            hopePictureBox1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            hopePictureBox1.TabIndex = 12;
+            hopePictureBox1.TabStop = false;
+            hopePictureBox1.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(352, 554);
+            ClientSize = new Size(352, 565);
+            Controls.Add(hopePictureBox1);
+            Controls.Add(controlBox1);
             Controls.Add(cyberSwitchStart);
             Controls.Add(LabelNetwork);
             Controls.Add(TabControlMain);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FormMain";
@@ -293,6 +330,7 @@ namespace WinPG.Forms
             tablogs.ResumeLayout(false);
             tabsettings.ResumeLayout(false);
             tabsettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)hopePictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -317,5 +355,7 @@ namespace WinPG.Forms
         private Label label7;
         private TabPage tabpeers;
         private ReaLTaiizor.Controls.CyberSwitch cyberSwitchStart;
+        private ReaLTaiizor.Controls.ControlBox controlBox1;
+        private ReaLTaiizor.Controls.HopePictureBox hopePictureBox1;
     }
 }
