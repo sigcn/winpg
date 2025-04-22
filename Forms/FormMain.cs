@@ -66,6 +66,7 @@ namespace WinPG.Forms
             this.TopMost = false;
             this.Show();
             this.WindowState = FormWindowState.Normal;
+            this.TabControlMain_SelectedIndexChanged(sender, e);
         }
 
         private void ExitClick(object? sender, EventArgs e)
@@ -75,7 +76,7 @@ namespace WinPG.Forms
         }
 
 
-        private void StartVPN(object? sender, EventArgs e)
+        private void StartVPN()
         {
             process = new();
             process.StartInfo.FileName = "pgcli.exe";
@@ -125,16 +126,9 @@ namespace WinPG.Forms
 
             Application.ApplicationExit -= StopVPN;
             Application.ApplicationExit += StopVPN;
-            Task.Delay(1000).ContinueWith(t =>
-            {
-                this.Invoke((MethodInvoker)(() =>
-                {
-                    this.TabControlMain_SelectedIndexChanged(sender, e);
-                }));
-            });
         }
 
-        private void StopVPN(object? s, EventArgs e)
+        private void StopVPN(object? s, EventArgs? e)
         {
             try
             {
@@ -177,9 +171,9 @@ namespace WinPG.Forms
             MessageBox.Show("OK");
         }
 
-        private void TabControlMain_SelectedIndexChanged(object? sender, EventArgs e)
+        private void TabControlMain_SelectedIndexChanged(object? sender, EventArgs? e)
         {
-            if (TabControlMain.SelectedIndex == 0)
+            if (TabControlMain.SelectedIndex == 1)
             {
                 renderPeers();
                 return;
@@ -195,7 +189,7 @@ namespace WinPG.Forms
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            this.StartVPN(sender, e);
+            this.StartVPN();
             Task.Delay(1000).ContinueWith(t =>
             {
                 this.Invoke((MethodInvoker)(() =>
@@ -209,7 +203,7 @@ namespace WinPG.Forms
         {
             if (cyberSwitchStart.Checked)
             {
-                this.StartVPN(null,null);
+                this.StartVPN();
                 return;
             }
             this.StopVPN(null, null);
