@@ -32,7 +32,6 @@ namespace WinPG.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             TabControlMain = new TabControl();
             tablogs = new TabPage();
@@ -50,13 +49,11 @@ namespace WinPG.Forms
             label2 = new Label();
             TextIPv4 = new TextBox();
             ButtonSignout = new Button();
-            peerBindingSource = new BindingSource(components);
             LabelNetwork = new Label();
             cyberSwitchStart = new ReaLTaiizor.Controls.CyberSwitch();
             TabControlMain.SuspendLayout();
             tablogs.SuspendLayout();
             tabsettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)peerBindingSource).BeginInit();
             SuspendLayout();
             // 
             // TabControlMain
@@ -228,10 +225,6 @@ namespace WinPG.Forms
             ButtonSignout.UseVisualStyleBackColor = true;
             ButtonSignout.Click += ButtonSignout_Click;
             // 
-            // peerBindingSource
-            // 
-            peerBindingSource.DataSource = typeof(Models.Peer);
-            // 
             // LabelNetwork
             // 
             LabelNetwork.AutoSize = true;
@@ -300,7 +293,6 @@ namespace WinPG.Forms
             tablogs.ResumeLayout(false);
             tabsettings.ResumeLayout(false);
             tabsettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)peerBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -323,7 +315,6 @@ namespace WinPG.Forms
         private TextBox TextMTU;
         private Button ButtonSave;
         private Label label7;
-        private BindingSource peerBindingSource;
         private TabPage tabpeers;
         private ReaLTaiizor.Controls.CyberSwitch cyberSwitchStart;
     }
