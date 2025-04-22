@@ -76,7 +76,7 @@ namespace WinPG.Forms
         }
 
 
-        private void StartVPN()
+        private async void StartVPN()
         {
             process = new();
             process.StartInfo.FileName = "pgcli.exe";
@@ -114,7 +114,7 @@ namespace WinPG.Forms
 
             try
             {
-                process.Start();
+                await Task.Run(process.Start);
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
             }
@@ -175,7 +175,7 @@ namespace WinPG.Forms
         {
             if (TabControlMain.SelectedIndex == 1)
             {
-                renderPeers();
+                RenderPeers();
                 return;
             }
             if (TabControlMain.SelectedIndex == 2)
@@ -209,7 +209,7 @@ namespace WinPG.Forms
             this.StopVPN(null, null);
         }
 
-        private void renderPeers()
+        private void RenderPeers()
         {
             pgvpn.QueryPeers().ContinueWith(t =>
             {
