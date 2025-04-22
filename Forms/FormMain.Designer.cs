@@ -35,9 +35,9 @@ namespace WinPG.Forms
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             TabControlMain = new TabControl();
-            tabpeers = new TabPage();
             tablogs = new TabPage();
-            TextLogs = new TextBox();
+            TextLogs = new RichTextBox();
+            tabpeers = new TabPage();
             tabsettings = new TabPage();
             label7 = new Label();
             ButtonSave = new Button();
@@ -51,14 +51,12 @@ namespace WinPG.Forms
             TextIPv4 = new TextBox();
             ButtonSignout = new Button();
             peerBindingSource = new BindingSource(components);
-            pictureBox1 = new PictureBox();
-            label1 = new Label();
             LabelNetwork = new Label();
+            cyberSwitchStart = new ReaLTaiizor.Controls.CyberSwitch();
             TabControlMain.SuspendLayout();
             tablogs.SuspendLayout();
             tabsettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)peerBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // TabControlMain
@@ -72,17 +70,6 @@ namespace WinPG.Forms
             TabControlMain.Size = new Size(331, 490);
             TabControlMain.TabIndex = 6;
             TabControlMain.SelectedIndexChanged += TabControlMain_SelectedIndexChanged;
-            // 
-            // tabpeers
-            // 
-            tabpeers.AutoScroll = true;
-            tabpeers.Location = new Point(4, 26);
-            tabpeers.Name = "tabpeers";
-            tabpeers.Padding = new Padding(3);
-            tabpeers.Size = new Size(323, 460);
-            tabpeers.TabIndex = 0;
-            tabpeers.Text = "Peers";
-            tabpeers.UseVisualStyleBackColor = true;
             // 
             // tablogs
             // 
@@ -98,14 +85,26 @@ namespace WinPG.Forms
             // TextLogs
             // 
             TextLogs.BackColor = SystemColors.ControlLightLight;
+            TextLogs.BorderStyle = BorderStyle.None;
             TextLogs.Font = new Font("Microsoft YaHei UI", 8F);
             TextLogs.Location = new Point(-3, 0);
-            TextLogs.Multiline = true;
             TextLogs.Name = "TextLogs";
             TextLogs.ReadOnly = true;
-            TextLogs.ScrollBars = ScrollBars.Both;
             TextLogs.Size = new Size(325, 462);
             TextLogs.TabIndex = 0;
+            TextLogs.Text = "";
+            TextLogs.WordWrap = false;
+            // 
+            // tabpeers
+            // 
+            tabpeers.AutoScroll = true;
+            tabpeers.Location = new Point(4, 26);
+            tabpeers.Name = "tabpeers";
+            tabpeers.Padding = new Padding(3);
+            tabpeers.Size = new Size(323, 460);
+            tabpeers.TabIndex = 0;
+            tabpeers.Text = "Peers";
+            tabpeers.UseVisualStyleBackColor = true;
             // 
             // tabsettings
             // 
@@ -181,7 +180,7 @@ namespace WinPG.Forms
             LabelServerValue.Name = "LabelServerValue";
             LabelServerValue.Size = new Size(122, 17);
             LabelServerValue.TabIndex = 15;
-            LabelServerValue.Text = Settings.Default.Server;
+            LabelServerValue.Text = "wss://openpg.in/pg";
             // 
             // label3
             // 
@@ -224,35 +223,13 @@ namespace WinPG.Forms
             ButtonSignout.Name = "ButtonSignout";
             ButtonSignout.Size = new Size(233, 26);
             ButtonSignout.TabIndex = 10;
-            ButtonSignout.Text = "Sign Out";
+            ButtonSignout.Text = "Sign out";
             ButtonSignout.UseVisualStyleBackColor = true;
             ButtonSignout.Click += ButtonSignout_Click;
             // 
             // peerBindingSource
             // 
             peerBindingSource.DataSource = typeof(Models.Peer);
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Image = Properties.Resources.start;
-            pictureBox1.Location = new Point(319, 8);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(24, 24);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 7;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += StartVPN;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = Color.Red;
-            label1.Location = new Point(252, 12);
-            label1.Name = "label1";
-            label1.Size = new Size(58, 17);
-            label1.TabIndex = 8;
-            label1.Text = "Stopped";
             // 
             // LabelNetwork
             // 
@@ -264,14 +241,52 @@ namespace WinPG.Forms
             LabelNetwork.TabIndex = 9;
             LabelNetwork.Text = "Network";
             // 
+            // cyberSwitchStart
+            // 
+            cyberSwitchStart.Alpha = 50;
+            cyberSwitchStart.BackColor = Color.Transparent;
+            cyberSwitchStart.Background = true;
+            cyberSwitchStart.Background_WidthPen = 2F;
+            cyberSwitchStart.BackgroundPen = true;
+            cyberSwitchStart.Checked = true;
+            cyberSwitchStart.ColorBackground = Color.FromArgb(37, 52, 68);
+            cyberSwitchStart.ColorBackground_1 = Color.FromArgb(37, 52, 68);
+            cyberSwitchStart.ColorBackground_2 = Color.FromArgb(41, 63, 86);
+            cyberSwitchStart.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            cyberSwitchStart.ColorBackground_Value_1 = Color.FromArgb(28, 200, 238);
+            cyberSwitchStart.ColorBackground_Value_2 = Color.FromArgb(100, 208, 232);
+            cyberSwitchStart.ColorLighting = Color.FromArgb(29, 200, 238);
+            cyberSwitchStart.ColorPen_1 = Color.FromArgb(37, 52, 68);
+            cyberSwitchStart.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            cyberSwitchStart.ColorValue = Color.FromArgb(29, 200, 238);
+            cyberSwitchStart.CyberSwitchStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            cyberSwitchStart.Font = new Font("Arial", 11F);
+            cyberSwitchStart.ForeColor = Color.FromArgb(245, 245, 245);
+            cyberSwitchStart.Lighting = false;
+            cyberSwitchStart.LinearGradient_Background = false;
+            cyberSwitchStart.LinearGradient_Value = false;
+            cyberSwitchStart.LinearGradientPen = false;
+            cyberSwitchStart.Location = new Point(305, 9);
+            cyberSwitchStart.Name = "cyberSwitchStart";
+            cyberSwitchStart.PenWidth = 10;
+            cyberSwitchStart.RGB = false;
+            cyberSwitchStart.Rounding = true;
+            cyberSwitchStart.RoundingInt = 90;
+            cyberSwitchStart.Size = new Size(35, 20);
+            cyberSwitchStart.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            cyberSwitchStart.TabIndex = 10;
+            cyberSwitchStart.Tag = "Cyber";
+            cyberSwitchStart.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            cyberSwitchStart.Timer_RGB = 300;
+            cyberSwitchStart.CheckedChanged += CyberSwitchStart_CheckedChanged;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(352, 554);
+            Controls.Add(cyberSwitchStart);
             Controls.Add(LabelNetwork);
-            Controls.Add(label1);
-            Controls.Add(pictureBox1);
             Controls.Add(TabControlMain);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -282,21 +297,18 @@ namespace WinPG.Forms
             Load += FormMain_Load;
             TabControlMain.ResumeLayout(false);
             tablogs.ResumeLayout(false);
-            tablogs.PerformLayout();
             tabsettings.ResumeLayout(false);
             tabsettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)peerBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
+
         #endregion
         private TabControl TabControlMain;
         private TabPage tablogs;
-        private PictureBox pictureBox1;
-        private Label label1;
-        private TextBox TextLogs;
+        private RichTextBox TextLogs;
         private Label LabelNetwork;
         private Button ButtonSignout;
         private TabPage tabsettings;
@@ -312,5 +324,6 @@ namespace WinPG.Forms
         private Label label7;
         private BindingSource peerBindingSource;
         private TabPage tabpeers;
+        private ReaLTaiizor.Controls.CyberSwitch cyberSwitchStart;
     }
 }

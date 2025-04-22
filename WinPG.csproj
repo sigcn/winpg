@@ -37,4 +37,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ReaLTaiizor" Version="3.8.1.2" />
+  </ItemGroup>
+
 </Project>

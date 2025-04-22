@@ -34,7 +34,6 @@ namespace WinPG.Forms
             LabelNetwork.Text = networkSecret.Network;
 
             // tray
-            new ToolTip().SetToolTip(pictureBox1, "start");
             trayMenu = new ContextMenuStrip();
             trayMenu.Items.Add("Exit", null, ExitClick);
 
@@ -126,12 +125,6 @@ namespace WinPG.Forms
 
             Application.ApplicationExit -= StopVPN;
             Application.ApplicationExit += StopVPN;
-            pictureBox1.Image = Properties.Resources.stop;
-            pictureBox1.Click -= StartVPN;
-            pictureBox1.Click += StopVPN;
-            label1.Text = "Started";
-            label1.ForeColor = Color.Green;
-            new ToolTip().SetToolTip(pictureBox1, "stop");
             Task.Delay(1000).ContinueWith(t =>
             {
                 this.Invoke((MethodInvoker)(() =>
@@ -153,12 +146,6 @@ namespace WinPG.Forms
 
             }
             catch (Exception) { }
-            pictureBox1.Image = Properties.Resources.start;
-            pictureBox1.Click -= StopVPN;
-            pictureBox1.Click += StartVPN;
-            label1.Text = "Stopped";
-            label1.ForeColor = Color.Red;
-            new ToolTip().SetToolTip(pictureBox1, "start");
             this.TabControlMain_SelectedIndexChanged(s, e);
         }
 
@@ -216,6 +203,16 @@ namespace WinPG.Forms
                     this.TabControlMain_SelectedIndexChanged(sender, e);
                 }));
             });
+        }
+
+        private void CyberSwitchStart_CheckedChanged()
+        {
+            if (cyberSwitchStart.Checked)
+            {
+                this.StartVPN(null,null);
+                return;
+            }
+            this.StopVPN(null, null);
         }
 
         private void renderPeers()
