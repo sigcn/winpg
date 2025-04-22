@@ -94,6 +94,7 @@ namespace WinPG.Forms
             TextLogs.TabIndex = 0;
             TextLogs.Text = "";
             TextLogs.WordWrap = false;
+            TextLogs.SelectionIndent = 5;
             // 
             // tabpeers
             // 
