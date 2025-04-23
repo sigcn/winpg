@@ -16,7 +16,7 @@ namespace WinPG.Forms
 {
     public partial class FormMain : NoneBorderForm
     {
-        private PGVPN pgvpn = new();
+        private readonly PGVPN pgvpn = new();
         private Process? process;
         private readonly NotifyIcon trayIcon;
         private readonly ContextMenuStrip trayMenu;
@@ -82,6 +82,11 @@ namespace WinPG.Forms
         {
             process = new();
             process.StartInfo.FileName = "pgcli.exe";
+            process.EnableRaisingEvents = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.Arguments = $"vpn -s {Properties.Settings.Default.Server} -f psns.json";
             if (Properties.Settings.Default.MTU > 0)
             {
@@ -95,25 +100,26 @@ namespace WinPG.Forms
             {
                 process.StartInfo.Arguments += $" -6 \"{Properties.Settings.Default.IPv6}\"";
             }
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.OutputDataReceived += (s, e) =>
+            process.Exited += (s, e) =>
+            {
+                TextLogs.Invoke((MethodInvoker)(() => {
+                    this.cyberSwitchStart.Checked = false;
+                    TextLogs.AppendText("Core exited" + Environment.NewLine);
+                }));
+            };
+            DataReceivedEventHandler appendLog = (object s, DataReceivedEventArgs e) =>
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    TextLogs.Invoke((MethodInvoker)(() => TextLogs.AppendText(e.Data + Environment.NewLine)));
+                    TextLogs.Invoke((MethodInvoker)(() => { 
+                        TextLogs.AppendText(e.Data + Environment.NewLine);
+                        TextLogs.ScrollToCaret();
+                    }));
                 }
             };
-            process.ErrorDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    TextLogs.Invoke((MethodInvoker)(() => TextLogs.AppendText(e.Data + Environment.NewLine)));
-                }
-            };
-
+            process.OutputDataReceived += appendLog;
+            process.ErrorDataReceived += appendLog;
+           
             try
             {
                 await Task.Run(process.Start);
@@ -122,7 +128,10 @@ namespace WinPG.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                TextLogs.Invoke((MethodInvoker)(() => {
+                    this.cyberSwitchStart.Checked = false;
+                    TextLogs.AppendText(ex.Message + Environment.NewLine);
+                }));
                 return;
             }
 
@@ -142,7 +151,10 @@ namespace WinPG.Forms
 
             }
             catch (Exception) { }
-            this.TabControlMain_SelectedIndexChanged(s, e);
+            this.Invoke((MethodInvoker)(() =>
+            {
+                this.TabControlMain_SelectedIndexChanged(s, e);
+            }));
         }
 
         private void ButtonSignout_Click(object sender, EventArgs e)
@@ -154,7 +166,6 @@ namespace WinPG.Forms
             File.Delete("psns.json");
             formLogin.Show();
         }
-
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {

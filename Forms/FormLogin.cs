@@ -17,6 +17,57 @@ namespace WinPG.Forms
             this.ApplyFormEffects();
         }
 
+        public void OnShown(object? sender, EventArgs e)
+        {
+            if (File.Exists("psns.json"))
+            {
+                string json = File.ReadAllText("psns.json");
+                NetworkSecret? networkSecret = JsonSerializer.Deserialize<NetworkSecret>(json);
+                if (networkSecret != null && networkSecret.Expire > DateTime.UtcNow)
+                {
+                    this.BeginInvoke((MethodInvoker)delegate
+                    {
+                        this.Hide();
+                        new FormMain(this).Show();
+                    });
+                    return;
+                }
+            }
+            RenderOIDCSignin();
+        }
+
+        private void SignIn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NetworkSecret ns = JsonSerializer.Deserialize<NetworkSecret>(TextJSONSecret.Text) ?? new NetworkSecret
+                {
+                    Secret = string.Empty,
+                    Network = string.Empty
+                };
+                if (String.IsNullOrEmpty(ns.Secret))
+                {
+                    MessageBox.Show("Invalid JSON secret");
+                    return;
+                }
+            }
+            catch (JsonException ex)
+            {
+                MessageBox.Show("Invalid JSON secret: " + ex.Message);
+                return;
+            }
+            File.WriteAllText("psns.json", TextJSONSecret.Text);
+            this.Hide();
+            new FormMain(this).Show();
+        }
+
+        private void PictureBoxSettings_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormSettings formSettings = new(this);
+            formSettings.Show();
+        }
+
         private async void RenderOIDCSignin()
         {
             try
@@ -108,57 +159,6 @@ namespace WinPG.Forms
             {
                 MessageBox.Show($"Request error: {ex.Message}");
             }
-        }
-
-
-        public void OnShown(object? sender, EventArgs e)
-        {
-            if (File.Exists("psns.json"))
-            {
-                string json = File.ReadAllText("psns.json");
-                NetworkSecret? networkSecret = JsonSerializer.Deserialize<NetworkSecret>(json);
-                if (networkSecret != null && networkSecret.Expire > DateTime.UtcNow)
-                {
-                    this.BeginInvoke((MethodInvoker)delegate
-                    {
-                        this.Hide();
-                        new FormMain(this).Show();
-                    });
-                }
-            }
-            RenderOIDCSignin();
-        }
-
-        private void SignIn_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                NetworkSecret ns = JsonSerializer.Deserialize<NetworkSecret>(TextJSONSecret.Text) ?? new NetworkSecret
-                {
-                    Secret = string.Empty,
-                    Network = string.Empty
-                };
-                if (String.IsNullOrEmpty(ns.Secret))
-                {
-                    MessageBox.Show("Invalid JSON secret");
-                    return;
-                }
-            }
-            catch (JsonException ex)
-            {
-                MessageBox.Show("Invalid JSON secret: " + ex.Message);
-                return;
-            }
-            File.WriteAllText("psns.json", TextJSONSecret.Text);
-            this.Hide();
-            new FormMain(this).Show();
-        }
-
-        private void PictureBoxSettings_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FormSettings formSettings = new(this);
-            formSettings.Show();
         }
     }
 
