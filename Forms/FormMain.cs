@@ -9,7 +9,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using WinPG.Models;
 
 namespace WinPG.Forms
@@ -18,6 +17,7 @@ namespace WinPG.Forms
     {
         private readonly PGVPN pgvpn = new();
         private Process? process;
+        private System.Timers.Timer? timer;
         private readonly NotifyIcon trayIcon;
         private readonly ContextMenuStrip trayMenu;
         private readonly FormLogin formLogin;
@@ -49,6 +49,20 @@ namespace WinPG.Forms
 
             trayIcon.MouseClick += TrayIcon_Click;
             this.FormClosing += MainForm_FormClosing;
+            this.TextLogs.SelectionIndent = 5;
+        }
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            this.MouseDown += this.MoveForm;
+            this.ApplyFormEffects();
+            this.StartVPN();
+            Task.Delay(1000).ContinueWith(t =>
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    this.TabControlMain_SelectedIndexChanged(sender, e);
+                }));
+            });
         }
         private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
@@ -56,6 +70,38 @@ namespace WinPG.Forms
             {
                 e.Cancel = true;
                 this.Hide();
+                this.StopBootTimer();
+            }
+        }
+
+        private void StartBootTimer()
+        {
+            if (this.process != null && !this.process.HasExited && this.timer == null) {
+                MethodInvoker updateLabel = () => {
+                    TimeSpan ts = DateTime.Now - process.StartTime;
+                    string elapsed = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                        ts.Hours, ts.Minutes, ts.Seconds);
+                    labelBootTime.Text = elapsed;
+                };
+                updateLabel();
+                this.timer = new();
+                timer.Interval = 1000;
+                timer.Elapsed += (s, e) => {
+                    this.labelBootTime.Invoke(updateLabel);
+                };
+                timer.Start();
+            }
+        }
+
+        private void StopBootTimer()
+        {
+            if(this.timer != null) {  
+                this.timer.Stop();
+                this.timer.Dispose();
+                this.timer = null;
+                this.labelBootTime.Invoke((MethodInvoker)(() => {
+                    this.labelBootTime.Text = "";
+                }));
             }
         }
         private void TrayIcon_Click(object? sender, MouseEventArgs e)
@@ -67,6 +113,7 @@ namespace WinPG.Forms
             this.TopMost = true;
             this.TopMost = false;
             this.Show();
+            this.StartBootTimer();
             this.WindowState = FormWindowState.Normal;
             this.TabControlMain_SelectedIndexChanged(sender, e);
         }
@@ -125,6 +172,7 @@ namespace WinPG.Forms
                 await Task.Run(process.Start);
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
+                this.StartBootTimer();
             }
             catch (Exception ex)
             {
@@ -148,13 +196,13 @@ namespace WinPG.Forms
                     process.Kill();
                     process.Dispose();
                 }
-
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    this.TabControlMain_SelectedIndexChanged(s, e);
+                }));
             }
             catch (Exception) { }
-            this.Invoke((MethodInvoker)(() =>
-            {
-                this.TabControlMain_SelectedIndexChanged(s, e);
-            }));
+            this.StopBootTimer();
         }
 
         private void ButtonSignout_Click(object sender, EventArgs e)
@@ -198,20 +246,6 @@ namespace WinPG.Forms
                 TextIPv6.Text = Properties.Settings.Default.IPv6;
                 TextMTU.Text = Properties.Settings.Default.MTU + "";
             }
-        }
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            this.MouseDown += this.MoveForm;
-            this.ApplyFormEffects();
-            this.StartVPN();
-            Task.Delay(1000).ContinueWith(t =>
-            {
-                this.Invoke((MethodInvoker)(() =>
-                {
-                    this.TabControlMain_SelectedIndexChanged(sender, e);
-                }));
-            });
         }
 
         private void CyberSwitchStart_CheckedChanged()

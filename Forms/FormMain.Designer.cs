@@ -53,6 +53,7 @@ namespace WinPG.Forms
             cyberSwitchStart = new ReaLTaiizor.Controls.CyberSwitch();
             controlBox1 = new ReaLTaiizor.Controls.ControlBox();
             hopePictureBox1 = new ReaLTaiizor.Controls.HopePictureBox();
+            labelBootTime = new Label();
             TabControlMain.SuspendLayout();
             tablogs.SuspendLayout();
             tabsettings.SuspendLayout();
@@ -94,7 +95,6 @@ namespace WinPG.Forms
             TextLogs.TabIndex = 0;
             TextLogs.Text = "";
             TextLogs.WordWrap = false;
-            TextLogs.SelectionIndent = 5;
             // 
             // tabpeers
             // 
@@ -309,11 +309,22 @@ namespace WinPG.Forms
             hopePictureBox1.TabStop = false;
             hopePictureBox1.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             // 
+            // labelBootTime
+            // 
+            labelBootTime.AutoSize = true;
+            labelBootTime.Font = new Font("Microsoft YaHei UI", 9F);
+            labelBootTime.ForeColor = SystemColors.ControlDark;
+            labelBootTime.Location = new Point(249, 37);
+            labelBootTime.Name = "labelBootTime";
+            labelBootTime.Size = new Size(0, 17);
+            labelBootTime.TabIndex = 13;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(352, 565);
+            Controls.Add(labelBootTime);
             Controls.Add(hopePictureBox1);
             Controls.Add(controlBox1);
             Controls.Add(cyberSwitchStart);
@@ -357,5 +368,6 @@ namespace WinPG.Forms
         private ReaLTaiizor.Controls.CyberSwitch cyberSwitchStart;
         private ReaLTaiizor.Controls.ControlBox controlBox1;
         private ReaLTaiizor.Controls.HopePictureBox hopePictureBox1;
+        private Label labelBootTime;
     }
 }
