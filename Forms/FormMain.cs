@@ -37,7 +37,7 @@ namespace WinPG.Forms
 
             // tray
             trayMenu = new ContextMenuStrip();
-            trayMenu.Items.Add("Exit", null, ExitClick);
+            trayMenu.Items.Add("Exit", Properties.Resources.exit_red, ExitClick);
 
             trayIcon = new NotifyIcon
             {
