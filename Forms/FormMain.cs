@@ -212,6 +212,7 @@ namespace WinPG.Forms
             trayIcon.Dispose();
             this.Close();
             File.Delete("psns.json");
+            formLogin.OnShown(sender, e);
             formLogin.Show();
         }
 
