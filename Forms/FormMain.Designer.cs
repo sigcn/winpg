@@ -34,9 +34,9 @@ namespace WinPG.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             TabControlMain = new TabControl();
+            tabpeers = new TabPage();
             tablogs = new TabPage();
             TextLogs = new RichTextBox();
-            tabpeers = new TabPage();
             tabsettings = new TabPage();
             label7 = new Label();
             ButtonSave = new Button();
@@ -62,8 +62,8 @@ namespace WinPG.Forms
             // 
             // TabControlMain
             // 
-            TabControlMain.Controls.Add(tablogs);
             TabControlMain.Controls.Add(tabpeers);
+            TabControlMain.Controls.Add(tablogs);
             TabControlMain.Controls.Add(tabsettings);
             TabControlMain.Location = new Point(12, 67);
             TabControlMain.Name = "TabControlMain";
@@ -71,6 +71,17 @@ namespace WinPG.Forms
             TabControlMain.Size = new Size(331, 490);
             TabControlMain.TabIndex = 6;
             TabControlMain.SelectedIndexChanged += TabControlMain_SelectedIndexChanged;
+            // 
+            // tabpeers
+            // 
+            tabpeers.AutoScroll = true;
+            tabpeers.Location = new Point(4, 26);
+            tabpeers.Name = "tabpeers";
+            tabpeers.Padding = new Padding(3);
+            tabpeers.Size = new Size(323, 460);
+            tabpeers.TabIndex = 0;
+            tabpeers.Text = "Peers";
+            tabpeers.UseVisualStyleBackColor = true;
             // 
             // tablogs
             // 
@@ -95,17 +106,6 @@ namespace WinPG.Forms
             TextLogs.TabIndex = 0;
             TextLogs.Text = "";
             TextLogs.WordWrap = false;
-            // 
-            // tabpeers
-            // 
-            tabpeers.AutoScroll = true;
-            tabpeers.Location = new Point(4, 26);
-            tabpeers.Name = "tabpeers";
-            tabpeers.Padding = new Padding(3);
-            tabpeers.Size = new Size(323, 460);
-            tabpeers.TabIndex = 0;
-            tabpeers.Text = "Peers";
-            tabpeers.UseVisualStyleBackColor = true;
             // 
             // tabsettings
             // 

@@ -10,17 +10,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WinPG.Models;
+using WinPG.Properties;
 
 namespace WinPG.Forms
 {
     public partial class FormMain : NoneBorderForm
     {
         private readonly PGVPN pgvpn = new();
-        private Process? process;
-        private System.Timers.Timer? timer;
         private readonly NotifyIcon trayIcon;
         private readonly ContextMenuStrip trayMenu;
         private readonly FormLogin formLogin;
+
+        private Process? process;
+        private System.Timers.Timer? timer;
+        private Peer[]? foundPeers = null;
 
         public FormMain(FormLogin formLogin)
         {
@@ -82,6 +85,8 @@ namespace WinPG.Forms
                     string elapsed = string.Format("{0:D2}:{1:D2}:{2:D2}",
                         ts.Hours, ts.Minutes, ts.Seconds);
                     labelBootTime.Text = elapsed;
+
+                    RenderPeers();
                 };
                 updateLabel();
                 this.timer = new();
@@ -99,9 +104,9 @@ namespace WinPG.Forms
                 this.timer.Stop();
                 this.timer.Dispose();
                 this.timer = null;
-                this.labelBootTime.Invoke((MethodInvoker)(() => {
+                this.UIInvoke(() => {
                     this.labelBootTime.Text = "";
-                }));
+                });
             }
         }
         private void TrayIcon_Click(object? sender, MouseEventArgs e)
@@ -123,7 +128,6 @@ namespace WinPG.Forms
             trayIcon.Visible = false;
             Application.Exit();
         }
-
 
         private async void StartVPN()
         {
@@ -195,6 +199,7 @@ namespace WinPG.Forms
                 {
                     process.Kill();
                     process.Dispose();
+                    process = null;
                 }
                 this.Invoke((MethodInvoker)(() =>
                 {
@@ -235,7 +240,7 @@ namespace WinPG.Forms
 
         private void TabControlMain_SelectedIndexChanged(object? sender, EventArgs? e)
         {
-            if (TabControlMain.SelectedIndex == 1)
+            if (TabControlMain.SelectedIndex == 0)
             {
                 RenderPeers();
                 return;
@@ -259,6 +264,41 @@ namespace WinPG.Forms
             this.StopVPN(null, null);
         }
 
+        private void UIInvoke(Delegate method)
+        {
+            if (this.IsHandleCreated)
+            {
+                this.Invoke(method);
+            }
+        }
+
+        private bool CompareAndSet(Peer[]? peers)
+        {
+            if (peers == null && foundPeers == null)
+            {
+                return false;
+            }
+            if (peers == null || foundPeers == null)
+            {
+                foundPeers = peers;
+                return true;
+            }
+            if (peers.Length != foundPeers.Length)
+            {
+                foundPeers = peers;
+                return true;
+            }
+            for (int i = 0; i < peers.Length; i++)
+            {
+                if (peers[i].ID != foundPeers[i].ID || !Peer.LabelsEquals(peers[i], foundPeers[i]))
+                {
+                    foundPeers = peers;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void RenderPeers()
         {
             pgvpn.QueryPeers().ContinueWith(t =>
@@ -269,17 +309,31 @@ namespace WinPG.Forms
                     return;
                 }
                 Peer[]? peers = t.Result;
-                if (peers == null)
+                if (!this.CompareAndSet(peers))
                 {
-                    MessageBox.Show("No peers found");
                     return;
                 }
-
-                var top = 0;
-                this.Invoke((MethodInvoker)(() =>
+                if (peers == null || peers.Length == 0)
                 {
-                    tabpeers.Controls.Clear();
-                }));
+                    this.UIInvoke(() =>
+                    {
+                        tabpeers.Controls.Clear();
+                        PictureBox peersEmptyTips = new()
+                        {
+                            Image = Resources.empty,
+                            Location = new Point(105, 166),
+                            Name = "peersEmptyTips",
+                            Size = new Size(113, 82),
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            TabIndex = 0,
+                            TabStop = false,
+                        };
+                        tabpeers.Controls.Add(peersEmptyTips);
+                    });
+                    return;
+                }
+                var top = 0;
+                this.UIInvoke(tabpeers.Controls.Clear);
                 foreach (Peer peer in peers) {
                     Label LabelPeerID = new()
                     {
@@ -289,7 +343,8 @@ namespace WinPG.Forms
                         Name = "LabelPeerID",
                         Size = new Size(22, 17),
                         TabIndex = 0,
-                        Text = peer.ID
+                        Text = peer.ID,
+                        ForeColor = peer.GetLabel("node.off") != null ? Color.Gray : Color.Black,
                     };
                     Label LabelPeerIPv4 = new()
                     {
@@ -405,10 +460,10 @@ namespace WinPG.Forms
                     PanelPeer.Controls.Add(LabelPeerIPv4);
                     PanelPeer.Controls.Add(LabelPeerID);
 
-                    tabpeers.Invoke((MethodInvoker)(() =>
+                    this.UIInvoke(() =>
                     {
                         tabpeers.Controls.Add(PanelPeer);
-                    }));
+                    });
                     top += 91;
                 }
             });
