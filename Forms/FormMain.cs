@@ -290,7 +290,7 @@ namespace WinPG.Forms
             }
             for (int i = 0; i < peers.Length; i++)
             {
-                if (peers[i].ID != foundPeers[i].ID || !Peer.LabelsEquals(peers[i], foundPeers[i]))
+                if (!peers[i].Equals(foundPeers[i]))
                 {
                     foundPeers = peers;
                     return true;

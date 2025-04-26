@@ -73,12 +73,12 @@ namespace WinPG.Models
         public string? Hostname { get; set; }
         public string? IPv4 { get; set; }
         public string? IPv6 { get; set; }
-        public string[]? Addrs { get; set; } = Array.Empty<string>(); // Simplified initialization to fix IDE0301
+        public string[]? Addrs { get; set; } = []; // Simplified initialization to fix IDE0301
         public DateTime LastActiveTime { get; set; }
         public string? Mode { get; set; }
         public string? NAT { get; set; }
         public string? Version { get; set; }
-        public string[]? Labels { get; set; } = Array.Empty<string>(); // Simplified initialization to fix IDE0301
+        public string[]? Labels { get; set; } = []; // Simplified initialization to fix IDE0301
 
         public string? GetLabel(string key)
         {
@@ -99,6 +99,60 @@ namespace WinPG.Models
                 }
             }
             return null;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Peer p)
+            {
+                return false;
+            }
+            if (ID != p.ID)
+            {
+                return false;
+            }
+            if (Hostname != p.Hostname)
+            {
+                return false;
+            }
+            if (IPv4 != p.IPv4)
+            {
+                return false;
+            }
+            if (IPv6 != p.IPv6)
+            {
+                return false;
+            }
+            Addrs ??= [];
+            p.Addrs ??= [];
+            if (!Addrs.SequenceEqual(p.Addrs))
+            {
+                return false;
+            }
+            if (!LabelsEquals(this, p))
+            {
+                return false;
+            }
+            if (Mode != p.Mode)
+            {
+                return false;
+            }
+            if (NAT != p.NAT)
+            {
+                return false;
+            }
+            if (Version != p.Version)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(
+                HashCode.Combine(ID, Hostname, IPv4, IPv6),
+                HashCode.Combine(Addrs, Labels, Mode, NAT, Version)
+            );
         }
     }
 
